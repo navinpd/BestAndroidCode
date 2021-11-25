@@ -1,4 +1,4 @@
-package com.example.bestandroidcode.network
+package com.example.bestandroidcode.data.remote
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -7,8 +7,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ServiceBuilder {
     private val client = OkHttpClient.Builder().build()
 
+    private val baseUrl = "https://api.thecatapi.com/"
+
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.thecatapi.com/")
+        .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()

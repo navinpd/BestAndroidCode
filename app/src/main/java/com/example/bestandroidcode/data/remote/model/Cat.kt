@@ -1,4 +1,4 @@
-package com.example.bestandroidcode.model
+package com.example.bestandroidcode.data.remote.model
 
 data class Cat (
     val id: String,

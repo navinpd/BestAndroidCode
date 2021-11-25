@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.bestandroidcode.MainActivity
 import com.example.bestandroidcode.R
-import com.example.bestandroidcode.model.Cat
-import com.example.bestandroidcode.network.CatAPI
-import com.example.bestandroidcode.network.ServiceBuilder
+import com.example.bestandroidcode.data.remote.model.Cat
+import com.example.bestandroidcode.data.remote.api.CatAPI
+import com.example.bestandroidcode.data.remote.ServiceBuilder
 import kotlinx.android.synthetic.main.main_fragment.*
 import retrofit2.Call
 import retrofit2.Callback

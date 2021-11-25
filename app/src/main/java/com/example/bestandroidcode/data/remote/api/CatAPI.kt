@@ -1,6 +1,6 @@
-package com.example.bestandroidcode.network
+package com.example.bestandroidcode.data.remote.api
 
-import com.example.bestandroidcode.model.Cat
+import com.example.bestandroidcode.data.remote.model.Cat
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

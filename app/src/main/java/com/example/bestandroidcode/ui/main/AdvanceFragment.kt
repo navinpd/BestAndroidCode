@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.bestandroidcode.MainActivity
 import com.example.bestandroidcode.R
-import com.example.bestandroidcode.model.Cat
-import com.example.bestandroidcode.network.CatAPI
-import com.example.bestandroidcode.network.ServiceBuilder
+import com.example.bestandroidcode.data.remote.model.Cat
+import com.example.bestandroidcode.data.remote.api.CatAPI
+import com.example.bestandroidcode.data.remote.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -62,7 +62,12 @@ class AdvanceFragment : Fragment() {
         spCategory.adapter = adapter
 
         spCategory.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 selectedCategoryId = categoryIdList[position]
             }
 
@@ -72,38 +77,38 @@ class AdvanceFragment : Fragment() {
         btnAnswer.setOnClickListener {
             val answer = etAnswer.text.toString().toIntOrNull()
 
-            if (answer != null) {
-                if (variableA + variableB == answer) {
-                    val request = ServiceBuilder.buildService(CatAPI::class.java)
-                    val call = request.getCatBasedOnCategory(selectedCategoryId.toString())
+            if (answer != null && variableA + variableB == answer) {
+                val request = ServiceBuilder.buildService(CatAPI::class.java)
+                val call = request.getCatBasedOnCategory(selectedCategoryId.toString())
 
-                    call.enqueue(object : Callback<List<Cat>> {
-                        override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
-                            if (response.isSuccessful) {
+                call.enqueue(object : Callback<List<Cat>> {
+                    override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
+                        if (response.isSuccessful) {
 
-                                currentCatObject = response.body()!!.first()
+                            currentCatObject = response.body()!!.first()
 
-                                Glide.with(this@AdvanceFragment)
-                                    .load(response.body()!!.first().url)
-                                    .into(ivCat)
+                            Glide.with(this@AdvanceFragment)
+                                .load(response.body()!!.first().url)
+                                .into(ivCat)
 
-                                val activity = activity as MainActivity
-                                activity.refreshFavoriteButton(currentCatObject!!.url)
+                            val activity = activity as MainActivity
+                            activity.refreshFavoriteButton(currentCatObject!!.url)
 
-                                generateQuestion()
-                                etAnswer.setText("")
-                            }
+                            generateQuestion()
+                            etAnswer.setText("")
                         }
+                    }
 
-                        override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
-                            Toast.makeText(activity, "${t.message}", Toast.LENGTH_SHORT).show()
-                        }
-                    })
-                } else {
-                    Toast.makeText(activity, "The Meow Lord did not approve your answer!", Toast.LENGTH_SHORT).show()
-                }
+                    override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
+                        Toast.makeText(activity, "${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
             } else {
-                Toast.makeText(activity, "The Meow Lord did not approve your answer!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    activity,
+                    "The Meow Lord did not approve your answer!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }
