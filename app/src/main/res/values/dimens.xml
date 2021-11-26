@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="divider">0.2dp</dimen>
+    <dimen name="d0">0dp</dimen>
+    <dimen name="d1">8dp</dimen>
+    <dimen name="d2">16dp</dimen>
+    <dimen name="d3">24dp</dimen>
+    <dimen name="d4">32dp</dimen>
+    <dimen name="d5">40dp</dimen>
+    <dimen name="d6">48dp</dimen>
+    <dimen name="d7">56dp</dimen>
+    <dimen name="d8">64dp</dimen>
+
+    <dimen name="max_height">350dp</dimen>
+
+    <dimen name="elevation_lvl0">0dp</dimen>
+    <dimen name="elevation_lvl1">1dp</dimen>
+    <dimen name="elevation_lvl2">3dp</dimen>
+    <dimen name="elevation_lvl3">6dp</dimen>
+    <dimen name="elevation_lvl4">9dp</dimen>
+
+    <dimen name="corner_bg">16dp</dimen>
+
+</resources>

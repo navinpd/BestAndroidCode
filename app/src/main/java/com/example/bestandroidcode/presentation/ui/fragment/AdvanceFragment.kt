@@ -46,6 +46,7 @@ class AdvanceFragment : Fragment(R.layout.advance_fragment) {
         viewBinding = AdvanceFragmentBinding.bind(view)
         generateQuestion()
         categoryList = resources.getStringArray(R.array.cat_category)
+        val mergedCatIV = viewBinding.container.ivCat
 
         viewModel.categoryCatLiveData.observe(viewLifecycleOwner, { value ->
             Log.d(javaClass.simpleName, "Fragment $value")
@@ -57,16 +58,14 @@ class AdvanceFragment : Fragment(R.layout.advance_fragment) {
                     //TODO hide progress bar
                 }
                 is MainViewModel.CurrentViewState.ShowError -> {
-                    val activity = activity as MainActivity
-//                    activity.refreshFavoriteButton(currentCatObject!!.url)
-
                     Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
                 }
                 is MainViewModel.CurrentViewState.ShowData -> {
                     val activity = activity as MainActivity
-//                    activity.refreshFavoriteButton(currentCatObject!!.url)
+                    currentCatObject = value.item
+                    activity.refreshFavoriteButton(currentCatObject!!.url)
                     glide.load(value.item?.url)
-                        .into(viewBinding.ivCat)
+                        .into(mergedCatIV)
 
                     generateQuestion()
                     viewBinding.etAnswer.setText("")

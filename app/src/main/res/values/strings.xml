@@ -5,6 +5,10 @@
     <string name="wrong_answer_message">The Meow Lord did not approve your answer!</string>
     <string name="math_question">%1$d + %2$d = ?</string>
     <string name="fav_cat_String">Your Favorite Cats</string>
+    <string name="cat_category">Cat Category:</string>
+    <string name="category">Category</string>
+    <string name="answer">Answer</string>
+    <string name="tap_me">Tap Me!</string>
 
     <!--    String Arrays-->
     <string-array name="cat_category">

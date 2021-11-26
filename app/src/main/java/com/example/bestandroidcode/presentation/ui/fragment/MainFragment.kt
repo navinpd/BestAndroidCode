@@ -13,6 +13,7 @@ import com.example.bestandroidcode.presentation.ui.activities.MainActivity
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel
 import com.example.bestandroidcode.util.obtainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.cat_view.view.*
 import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
 
@@ -40,6 +41,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = MainFragmentBinding.bind(view)
+        val mergedCatIV = binding.container.ivCat
 
         viewModel.randomCatLiveData.observe(viewLifecycleOwner, { value ->
             Log.d(javaClass.simpleName, "Fragment $value")
@@ -51,16 +53,14 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                     //TODO hide progress bar
                 }
                 is MainViewModel.CurrentViewState.ShowError -> {
-                    val activity = activity as MainActivity
-//                    activity.refreshFavoriteButton(currentCatObject!!.url)
-
                     Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
                 }
                 is MainViewModel.CurrentViewState.ShowData -> {
                     val activity = activity as MainActivity
-//                    activity.refreshFavoriteButton(currentCatObject!!.url)
+                    currentCatObject = value.item
+                    activity.refreshFavoriteButton(currentCatObject!!.url)
                     glide.load(value.item?.url)
-                        .into(binding.ivCat)
+                        .into(mergedCatIV.ivCat)
                 }
             }
 

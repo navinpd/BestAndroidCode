@@ -6,12 +6,12 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/ivCat"
+    <include
+        android:id="@+id/container"
+        layout="@layout/cat_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="400dp"
-        android:scaleType="fitCenter"
-        android:layout_margin="20dp"/>
+        android:maxHeight="@dimen/max_height"
+        android:layout_margin="@dimen/d1" />
 
 </LinearLayout>

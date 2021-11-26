@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bestandroidcode.R
-import kotlinx.android.synthetic.main.favorite_row.view.*
+import kotlinx.android.synthetic.main.cat_view.view.*
+import kotlinx.android.synthetic.main.favorite_row.view.container
 
 class FavoriteAdapter(private val myDataset: Array<String>) :
     RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>() {
@@ -22,7 +23,7 @@ class FavoriteAdapter(private val myDataset: Array<String>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         Glide.with(holder.itemView.context)
             .load(myDataset[position])
-            .into(holder.view.ivCat)
+            .into(holder.view.container.ivCat)
     }
 
     override fun getItemCount() = myDataset.size
