@@ -2,4 +2,17 @@
     <string name="app_name">BestAndroidCode</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="wrong_answer_message">The Meow Lord did not approve your answer!</string>
+    <string name="math_question">%1$d + %2$d = ?</string>
+
+<!--    String Arrays-->
+    <string-array name="cat_category">
+        <item>Boxes</item>
+        <item>Clothes</item>
+        <item>Hats</item>
+        <item>Sinks</item>
+        <item>Space</item>
+        <item>Sunglasses</item>
+        <item>Ties</item>
+    </string-array>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.bestandroidcode
+package com.example.bestandroidcode.presentation.ui.activities
 
 import android.content.Context
 import android.content.Intent
@@ -8,9 +8,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.bestandroidcode.ui.main.AdvanceFragment
-import com.example.bestandroidcode.ui.main.MainFragment
+import com.example.bestandroidcode.R
+import com.example.bestandroidcode.presentation.ui.fragment.AdvanceFragment
+import com.example.bestandroidcode.presentation.ui.fragment.MainFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     // Best Android Code does not need comments to explain the code
@@ -53,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             } else if (f is AdvanceFragment && f.currentCatObject != null) {
                 catImageUrl = f.currentCatObject!!.url
             }
-            if(catImageUrl.isNotEmpty() && catImageUrl.isNotBlank()) {
+            if (catImageUrl.isNotEmpty() && catImageUrl.isNotBlank()) {
                 if (currentFavoriteList!!.contains(catImageUrl)) {
                     currentFavoriteList!!.remove(catImageUrl)
                 } else {
