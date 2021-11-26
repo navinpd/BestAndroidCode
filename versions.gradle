@@ -10,6 +10,7 @@ ext {
     lifecycleModelVersion = "2.4.0"
     glideVersion = "4.11.0"
     retrofitVersion = "2.9.0"
+    okHttp3Version = '4.9.0'
     gsonVersion = "2.9.0"
     junitVersion = "4.13.2"
     junitExtVersion = "1.1.3"

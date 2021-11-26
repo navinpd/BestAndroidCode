@@ -16,11 +16,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    // Best Android Code does not need comments to explain the code
-
     private lateinit var sharedPref: SharedPreferences
 
     private var mOptionsMenu: Menu? = null
+    private val favList = "FAVORITE_LIST"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_favorite -> {
 
-            val currentFavoriteList = sharedPref.getStringSet("FAVORITE_LIST", HashSet())
+            val currentFavoriteList = sharedPref.getStringSet(favList, HashSet())
 
             val f: Fragment? = supportFragmentManager.findFragmentById(R.id.container)
             var catImageUrl = ""
@@ -64,11 +63,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 val e: SharedPreferences.Editor = sharedPref.edit()
-                e.remove("FAVORITE_LIST")
-                e.commit()
+                e.remove(favList).apply()
 
-                e.putStringSet("FAVORITE_LIST", currentFavoriteList)
-                e.commit()
+                e.putStringSet(favList, currentFavoriteList).apply()
 
                 refreshFavoriteButton(catImageUrl)
             }
@@ -89,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
     fun refreshFavoriteButton(catImageUrl: String) {
         if (mOptionsMenu != null) {
-            val currentFavoriteList = sharedPref.getStringSet("FAVORITE_LIST", HashSet())
+            val currentFavoriteList = sharedPref.getStringSet(favList, HashSet())
 
             val favoriteItem = mOptionsMenu!!.findItem(R.id.action_favorite)
 

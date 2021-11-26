@@ -1,9 +1,8 @@
 package com.example.bestandroidcode.presentation.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.RequestManager
@@ -43,6 +42,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         binding = MainFragmentBinding.bind(view)
 
         viewModel.randomCatLiveData.observe(viewLifecycleOwner, { value ->
+            Log.d(javaClass.simpleName, "Fragment $value")
             when(value) {
                 is MainViewModel.CurrentViewState.ShowLoading -> {
                     //TODO hide progress bar
@@ -52,26 +52,23 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                 }
                 is MainViewModel.CurrentViewState.ShowError -> {
                     val activity = activity as MainActivity
-                    activity.refreshFavoriteButton(currentCatObject!!.url)
+//                    activity.refreshFavoriteButton(currentCatObject!!.url)
 
                     Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
                 }
                 is MainViewModel.CurrentViewState.ShowData -> {
                     val activity = activity as MainActivity
-                    activity.refreshFavoriteButton(currentCatObject!!.url)
-                    glide.load(value.show?.url)
-                        .into(ivCat)
+//                    activity.refreshFavoriteButton(currentCatObject!!.url)
+                    glide.load(value.item?.url)
+                        .into(binding.ivCat)
                 }
             }
 
-            val activity = activity as MainActivity
-            activity.refreshFavoriteButton(currentCatObject!!.url)
         })
 
         binding.btnLoadCat.setOnClickListener {
             viewModel.getRandomCat()
         }
-
 
         btnProUser.setOnClickListener {
             val advanceFragment = AdvanceFragment()
@@ -83,8 +80,4 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.main_fragment, container, false)
 }

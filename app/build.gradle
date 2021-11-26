@@ -48,6 +48,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttp3Version"
 
     implementation "androidx.core:core-ktx:$coreKotlin"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"

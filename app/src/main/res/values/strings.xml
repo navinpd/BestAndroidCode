@@ -4,8 +4,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="wrong_answer_message">The Meow Lord did not approve your answer!</string>
     <string name="math_question">%1$d + %2$d = ?</string>
+    <string name="fav_cat_String">Your Favorite Cats</string>
 
-<!--    String Arrays-->
+    <!--    String Arrays-->
     <string-array name="cat_category">
         <item>Boxes</item>
         <item>Clothes</item>

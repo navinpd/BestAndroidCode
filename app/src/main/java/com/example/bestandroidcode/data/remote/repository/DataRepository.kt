@@ -27,7 +27,12 @@ class DataRepository @Inject constructor(
 
             override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
                 if (response.isSuccessful) {
-                    randomCatData.postValue(CatResponse(cat = response.body()?.first(), null))
+                    randomCatData.postValue(
+                        CatResponse(
+                            cat = response.body()?.first(),
+                            throwable = null
+                        )
+                    )
                 } else {
                     randomCatData.postValue(
                         CatResponse(
@@ -49,7 +54,12 @@ class DataRepository @Inject constructor(
         catApi.getCatBasedOnCategory(categoryId).enqueue(object : Callback<List<Cat>> {
             override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
                 if (response.isSuccessful) {
-                    categoryCatData.postValue(CatResponse(cat = response.body()?.first(), null))
+                    categoryCatData.postValue(
+                        CatResponse(
+                            cat = response.body()?.first(),
+                            throwable = null
+                        )
+                    )
                 } else {
                     categoryCatData.postValue(
                         CatResponse(

@@ -1,5 +1,6 @@
 package com.example.bestandroidcode.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -9,8 +10,10 @@ import com.example.bestandroidcode.data.remote.model.CatResponse
 import com.example.bestandroidcode.data.remote.repository.DataRepository
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel.CurrentViewState.HideLoading
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel.CurrentViewState.ShowLoading
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class MainViewModel @Inject constructor(private val repository: DataRepository) : ViewModel() {
 
     private val randomCatData = MutableLiveData<CurrentViewState>()
@@ -30,7 +33,7 @@ class MainViewModel @Inject constructor(private val repository: DataRepository) 
             passRandomCatState(HideLoading, true)
 
             if (it.throwable == null) {
-                passCategoryViewState(
+                passRandomCatState(
                     CurrentViewState.ShowData(it.cat), false
                 )
             } else {
@@ -66,6 +69,7 @@ class MainViewModel @Inject constructor(private val repository: DataRepository) 
     }
 
     private fun passRandomCatState(currentViewState: CurrentViewState, isMain: Boolean) {
+        Log.d(javaClass.simpleName, "VM state passRandomCatState $currentViewState")
         if (isMain)
             randomCatData.value = currentViewState
         else
@@ -74,6 +78,7 @@ class MainViewModel @Inject constructor(private val repository: DataRepository) 
     }
 
     private fun passCategoryViewState(currentViewState: CurrentViewState, isMain: Boolean) {
+        Log.d(javaClass.simpleName, "VM state passCategoryViewState $currentViewState")
         if (isMain)
             categoryCatData.value = currentViewState
         else
@@ -82,8 +87,12 @@ class MainViewModel @Inject constructor(private val repository: DataRepository) 
     }
 
     override fun onCleared() {
-        repository.randomCatLiveData.removeObserver(categoryCatObserver)
-        repository.randomCatLiveData.removeObserver(randCatObserver)
+        if (this::categoryCatObserver.isInitialized) {
+            repository.randomCatLiveData.removeObserver(categoryCatObserver)
+        }
+        if (this::randCatObserver.isInitialized) {
+            repository.randomCatLiveData.removeObserver(randCatObserver)
+        }
         super.onCleared()
     }
 
@@ -91,6 +100,6 @@ class MainViewModel @Inject constructor(private val repository: DataRepository) 
         object ShowLoading : CurrentViewState()
         object HideLoading : CurrentViewState()
         data class ShowError(val message: String) : CurrentViewState()
-        data class ShowData(val show: Cat?) : CurrentViewState()
+        data class ShowData(val item: Cat?) : CurrentViewState()
     }
 }

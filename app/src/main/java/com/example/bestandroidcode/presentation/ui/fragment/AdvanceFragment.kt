@@ -1,9 +1,8 @@
 package com.example.bestandroidcode.presentation.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
@@ -40,14 +39,16 @@ class AdvanceFragment : Fragment(R.layout.advance_fragment) {
     @Inject
     lateinit var glide: RequestManager
 
-    private val categoryList = arrayOf(R.array.cat_category)
+    private lateinit var categoryList : Array<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBinding = AdvanceFragmentBinding.bind(view)
         generateQuestion()
+        categoryList = resources.getStringArray(R.array.cat_category)
 
         viewModel.categoryCatLiveData.observe(viewLifecycleOwner, { value ->
+            Log.d(javaClass.simpleName, "Fragment $value")
             when (value) {
                 is MainViewModel.CurrentViewState.ShowLoading -> {
                     //TODO hide progress bar
@@ -57,14 +58,14 @@ class AdvanceFragment : Fragment(R.layout.advance_fragment) {
                 }
                 is MainViewModel.CurrentViewState.ShowError -> {
                     val activity = activity as MainActivity
-                    activity.refreshFavoriteButton(currentCatObject!!.url)
+//                    activity.refreshFavoriteButton(currentCatObject!!.url)
 
                     Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
                 }
                 is MainViewModel.CurrentViewState.ShowData -> {
                     val activity = activity as MainActivity
-                    activity.refreshFavoriteButton(currentCatObject!!.url)
-                    glide.load(value.show?.url)
+//                    activity.refreshFavoriteButton(currentCatObject!!.url)
+                    glide.load(value.item?.url)
                         .into(viewBinding.ivCat)
 
                     generateQuestion()
@@ -106,11 +107,6 @@ class AdvanceFragment : Fragment(R.layout.advance_fragment) {
 
         }
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.advance_fragment, container, false)
 
     private fun generateQuestion() {
         variableA = (0..10).random()

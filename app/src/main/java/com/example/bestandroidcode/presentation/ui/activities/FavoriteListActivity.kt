@@ -15,15 +15,16 @@ class FavoriteListActivity : AppCompatActivity() {
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private val favList = "FAVORITE_LIST"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite_list)
 
-        title = "Your Favorite Cats"
+        title = getString(R.string.fav_cat_String)
 
         val sharedPref = getSharedPreferences("default", Context.MODE_PRIVATE)
-        val currentFavoriteList = sharedPref.getStringSet("FAVORITE_LIST", HashSet())
+        val currentFavoriteList = sharedPref.getStringSet(favList, HashSet())
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = FavoriteAdapter(currentFavoriteList!!.toTypedArray())
