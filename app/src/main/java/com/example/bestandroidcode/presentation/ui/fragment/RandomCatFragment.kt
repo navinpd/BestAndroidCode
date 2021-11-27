@@ -53,10 +53,10 @@ class RandomCatFragment : Fragment() {
             Log.d(javaClass.simpleName, "Fragment $value")
             when(value) {
                 is MainViewModel.CurrentViewState.ShowLoading -> {
-                    //TODO hide progress bar
+                    binding.progressBar.visibility = View.VISIBLE
                 }
                 is MainViewModel.CurrentViewState.HideLoading -> {
-                    //TODO hide progress bar
+                    binding.progressBar.visibility = View.GONE
                 }
                 is MainViewModel.CurrentViewState.ShowError -> {
                     Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
