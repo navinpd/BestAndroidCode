@@ -12,14 +12,15 @@ import com.bumptech.glide.RequestManager
 import com.example.bestandroidcode.R
 import com.example.bestandroidcode.data.remote.model.Cat
 import com.example.bestandroidcode.databinding.AdvanceFragmentBinding
-import com.example.bestandroidcode.presentation.ui.activities.MainActivity
+import com.example.bestandroidcode.presentation.ui.activities.LauncherCatActivity
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel
+import com.example.bestandroidcode.util.hideKeyboard
 import com.example.bestandroidcode.util.obtainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AdvanceFragment : Fragment(R.layout.advance_fragment) {
+class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
 
     var currentCatObject: Cat? = null
     private lateinit var viewBinding: AdvanceFragmentBinding
@@ -39,7 +40,7 @@ class AdvanceFragment : Fragment(R.layout.advance_fragment) {
     @Inject
     lateinit var glide: RequestManager
 
-    private lateinit var categoryList : Array<String>
+    private lateinit var categoryList: Array<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,7 +62,7 @@ class AdvanceFragment : Fragment(R.layout.advance_fragment) {
                     Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
                 }
                 is MainViewModel.CurrentViewState.ShowData -> {
-                    val activity = activity as MainActivity
+                    val activity = activity as LauncherCatActivity
                     currentCatObject = value.item
                     activity.refreshFavoriteButton(currentCatObject!!.url)
                     glide.load(value.item?.url)
@@ -73,7 +74,8 @@ class AdvanceFragment : Fragment(R.layout.advance_fragment) {
             }
         })
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryList)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         viewBinding.spCategory.adapter = adapter
 
@@ -94,6 +96,7 @@ class AdvanceFragment : Fragment(R.layout.advance_fragment) {
             val answer = viewBinding.etAnswer.text.toString().toIntOrNull()
 
             if (answer != null && variableA + variableB == answer) {
+                hideKeyboard()
 
                 viewModel.getCatByCategory(selectedCategoryId.toString())
             } else {

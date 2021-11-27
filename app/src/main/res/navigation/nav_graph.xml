@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/randomCatFragment">
+
+    <fragment
+        android:id="@+id/randomCatFragment"
+        android:name="com.example.bestandroidcode.presentation.ui.fragment.RandomCatFragment"
+        android:label="RandomCatFragment" >
+
+        <action
+            android:id="@+id/randomCatFragment_to_advanceCatFragment"
+            app:destination="@id/advanceCatFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/advanceCatFragment"
+        android:name="com.example.bestandroidcode.presentation.ui.fragment.AdvanceCatFragment"
+        android:label="AdvanceCatFragment" />
+
+</navigation>

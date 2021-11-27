@@ -29,7 +29,7 @@ object DiModule {
 
     @Provides
     fun provideSharedPreference(@ApplicationContext appContext: Context) =
-        appContext.getSharedPreferences("Local-Shared-Pref", 0)
+        appContext.getSharedPreferences("default", 0)
 
     @Provides
     fun provideGlide(@ApplicationContext appContext: Context) = Glide.with(appContext)

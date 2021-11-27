@@ -9,8 +9,8 @@ import com.example.bestandroidcode.R
 import kotlinx.android.synthetic.main.cat_view.view.*
 import kotlinx.android.synthetic.main.favorite_row.view.container
 
-class FavoriteAdapter(private val myDataset: Array<String>) :
-    RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>() {
+class FavoriteCatAdapter(private val myDataset: Array<String>) :
+    RecyclerView.Adapter<FavoriteCatAdapter.MyViewHolder>() {
 
     class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 

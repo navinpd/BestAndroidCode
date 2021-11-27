@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -16,7 +17,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField("String", "API_KEY", "\"7659a5b1-070e-44d0-b5c0-d1cbb1fe9d34\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -48,20 +48,32 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
-    implementation "com.squareup.okhttp3:logging-interceptor:$okHttp3Version"
-
     implementation "androidx.core:core-ktx:$coreKotlin"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerView"
     implementation "androidx.constraintlayout:constraintlayout:$constrainLayout"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleModelVersion"
+    //cardView
+    implementation "androidx.cardview:cardview:$cardViewVersion"
 
-    implementation "androidx.cardview:cardview:1.0.0"
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
 
+    //glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
+
+    //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttp3Version"
+
+    //Gson
     implementation "com.squareup.retrofit2:converter-gson:$gsonVersion"
+
+    // Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$junitExtVersion"
