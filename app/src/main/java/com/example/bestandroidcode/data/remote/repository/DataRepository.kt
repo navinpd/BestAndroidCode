@@ -1,10 +1,14 @@
 package com.example.bestandroidcode.data.remote.repository
 
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.bestandroidcode.data.remote.api.CatAPI
 import com.example.bestandroidcode.data.remote.model.Cat
 import com.example.bestandroidcode.data.remote.model.CatResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,32 +26,37 @@ class DataRepository @Inject constructor(
     val categoryCatLiveData: LiveData<CatResponse>
         get() = categoryCatData
 
-    fun getRandomCatApi() {
-        catApi.getCatRandom().enqueue(object : Callback<List<Cat>> {
+    @WorkerThread
+    suspend fun fetchRandomCat(): CatResponse = withContext(Dispatchers.IO) {
+        val result = try {
+            catApi.getCatRandom().execute()
+        } catch (cause: Throwable) {
+            throw cause
+        }
+        if (result.isSuccessful) {
+            return@withContext CatResponse(result.body()?.get(0), null)
+        } else {
+            return@withContext CatResponse(
+                cat = null,
+                throwable = Throwable(result.message())
+            )
+        }
+    }
 
-            override fun onResponse(call: Call<List<Cat>>, response: Response<List<Cat>>) {
-                if (response.isSuccessful) {
-                    randomCatData.postValue(
-                        CatResponse(
-                            cat = response.body()?.first(),
-                            throwable = null
-                        )
-                    )
-                } else {
-                    randomCatData.postValue(
-                        CatResponse(
-                            cat = null,
-                            throwable = Throwable(response.message())
-                        )
-                    )
-                }
-            }
-
-            override fun onFailure(call: Call<List<Cat>>, t: Throwable) {
-                randomCatData.postValue(CatResponse(cat = null, throwable = t))
-            }
-
-        })
+    suspend fun getCatByCategory(categoryId : String) : CatResponse = withContext(IO){
+        val result = try {
+            catApi.getCatBasedOnCategory(categoryId).execute()
+        } catch (ex: Throwable) {
+            throw ex
+        }
+        if(result.isSuccessful) {
+            return@withContext CatResponse(result.body()?.get(0) , null)
+        } else {
+            return@withContext CatResponse(
+                cat = null,
+                throwable = Throwable(result.message())
+            )
+        }
     }
 
     fun getCategoryBasedCat(categoryId: String) {

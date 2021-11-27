@@ -1,16 +1,14 @@
 package com.example.bestandroidcode.presentation.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.bestandroidcode.data.remote.model.Cat
 import com.example.bestandroidcode.data.remote.model.CatResponse
 import com.example.bestandroidcode.data.remote.repository.DataRepository
-import com.example.bestandroidcode.presentation.viewmodel.MainViewModel.CurrentViewState.HideLoading
-import com.example.bestandroidcode.presentation.viewmodel.MainViewModel.CurrentViewState.ShowLoading
+import com.example.bestandroidcode.presentation.viewmodel.MainViewModel.CurrentViewState.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,62 +25,42 @@ class MainViewModel @Inject constructor(private val repository: DataRepository) 
     private lateinit var categoryCatObserver: Observer<CatResponse>
 
     fun getRandomCat() {
-        passRandomCatState(ShowLoading, true)
+        passRandomCatState(ShowLoading)
 
-        randCatObserver = Observer {
-            passRandomCatState(HideLoading, true)
-
-            if (it.throwable == null) {
-                passRandomCatState(
-                    CurrentViewState.ShowData(it.cat), false
-                )
+        viewModelScope.launch(IO) {
+            val catResponse = repository.fetchRandomCat()
+            passRandomCatState(HideLoading)
+            if (catResponse.throwable == null) {
+                passRandomCatState(ShowData(catResponse.cat))
             } else {
-                passRandomCatState(
-                    CurrentViewState.ShowError(it.throwable.message ?: "Unknown Error"), false
-                )
+                passRandomCatState(ShowError(catResponse.throwable!!.message ?: "Unknown Error"))
             }
         }
-
-        repository.randomCatLiveData.observeForever(randCatObserver)
-        repository.getRandomCatApi()
     }
 
     fun getCatByCategory(categoryId: String) {
-        passCategoryViewState(ShowLoading, true)
+        passCategoryViewState(ShowLoading)
+        viewModelScope.launch(IO) {
+            val catResponse = repository.getCatByCategory(categoryId)
+            passCategoryViewState(HideLoading)
 
-        categoryCatObserver = Observer {
-            passCategoryViewState(HideLoading, true)
-
-            if (it.throwable == null) {
-                passCategoryViewState(
-                    CurrentViewState.ShowData(it.cat), false
-                )
+            if (catResponse.throwable == null) {
+                passCategoryViewState(ShowData(catResponse.cat))
             } else {
-                passCategoryViewState(
-                    CurrentViewState.ShowError(it.throwable.message ?: "Unknown Error"), false
-                )
+                passCategoryViewState(ShowError(catResponse.throwable.message ?: "Unknown Error"))
             }
         }
-
-        repository.categoryCatLiveData.observeForever(categoryCatObserver)
-        repository.getCategoryBasedCat(categoryId)
     }
 
-    private fun passRandomCatState(currentViewState: CurrentViewState, isMain: Boolean) {
+    private fun passRandomCatState(currentViewState: CurrentViewState) {
         Log.d(javaClass.simpleName, "VM state passRandomCatState $currentViewState")
-        if (isMain)
-            randomCatData.value = currentViewState
-        else
-            randomCatData.postValue(currentViewState)
+        randomCatData.postValue(currentViewState)
 
     }
 
-    private fun passCategoryViewState(currentViewState: CurrentViewState, isMain: Boolean) {
+    private fun passCategoryViewState(currentViewState: CurrentViewState) {
         Log.d(javaClass.simpleName, "VM state passCategoryViewState $currentViewState")
-        if (isMain)
-            categoryCatData.value = currentViewState
-        else
-            categoryCatData.postValue(currentViewState)
+        categoryCatData.postValue(currentViewState)
 
     }
 
