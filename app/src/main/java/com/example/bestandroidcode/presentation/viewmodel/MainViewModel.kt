@@ -1,9 +1,11 @@
 package com.example.bestandroidcode.presentation.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.bestandroidcode.data.remote.model.Cat
-import com.example.bestandroidcode.data.remote.model.CatResponse
 import com.example.bestandroidcode.data.remote.repository.DataRepository
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel.CurrentViewState.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,12 +19,10 @@ class MainViewModel @Inject constructor(private val repository: DataRepository) 
     private val randomCatData = MutableLiveData<CurrentViewState>()
     val randomCatLiveData: LiveData<CurrentViewState>
         get() = randomCatData
-    private lateinit var randCatObserver: Observer<CatResponse>
 
     private val categoryCatData = MutableLiveData<CurrentViewState>()
     val categoryCatLiveData: LiveData<CurrentViewState>
         get() = categoryCatData
-    private lateinit var categoryCatObserver: Observer<CatResponse>
 
     fun getRandomCat() {
         passRandomCatState(ShowLoading)
@@ -62,16 +62,6 @@ class MainViewModel @Inject constructor(private val repository: DataRepository) 
         Log.d(javaClass.simpleName, "VM state passCategoryViewState $currentViewState")
         categoryCatData.postValue(currentViewState)
 
-    }
-
-    override fun onCleared() {
-        if (this::categoryCatObserver.isInitialized) {
-            repository.randomCatLiveData.removeObserver(categoryCatObserver)
-        }
-        if (this::randCatObserver.isInitialized) {
-            repository.randomCatLiveData.removeObserver(randCatObserver)
-        }
-        super.onCleared()
     }
 
     sealed class CurrentViewState {

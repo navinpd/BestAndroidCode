@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.example.bestandroidcode.R
@@ -14,7 +15,6 @@ import com.example.bestandroidcode.data.remote.model.Cat
 import com.example.bestandroidcode.databinding.MainFragmentBinding
 import com.example.bestandroidcode.presentation.ui.activities.LauncherCatActivity
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel
-import com.example.bestandroidcode.util.obtainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.cat_view.view.*
 import javax.inject.Inject
@@ -22,19 +22,15 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RandomCatFragment : Fragment() {
 
-    private val viewModel: MainViewModel by lazy {
-        obtainViewModel(
-            requireActivity(),
-            MainViewModel::class.java,
-            defaultViewModelProviderFactory
-        )
+    private val viewModel by viewModels<MainViewModel> {
+        defaultViewModelProviderFactory
     }
 
     @Inject
     lateinit var glide: RequestManager
 
-    var currentCatObject: Cat? = null
-    private lateinit var binding: MainFragmentBinding
+    private var currentCatObject: Cat? = null
+    private var binding: MainFragmentBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,21 +38,21 @@ class RandomCatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = MainFragmentBinding.inflate(inflater)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mergedCatIV = binding.container.ivCat
+        val mergedCatIV = binding?.container?.ivCat
 
         viewModel.randomCatLiveData.observe(viewLifecycleOwner, { value ->
             Log.d(javaClass.simpleName, "Fragment $value")
             when(value) {
                 is MainViewModel.CurrentViewState.ShowLoading -> {
-                    binding.progressBar.visibility = View.VISIBLE
+                    binding?.progressBar?.visibility = View.VISIBLE
                 }
                 is MainViewModel.CurrentViewState.HideLoading -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding?.progressBar?.visibility = View.GONE
                 }
                 is MainViewModel.CurrentViewState.ShowError -> {
                     Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
@@ -66,17 +62,17 @@ class RandomCatFragment : Fragment() {
                     currentCatObject = value.item
                     activity.refreshFavoriteButton(currentCatObject!!.url)
                     glide.load(value.item?.url)
-                        .into(mergedCatIV.ivCat)
+                        .into(mergedCatIV?.ivCat!!)
                 }
             }
 
         })
 
-        binding.btnLoadCat.setOnClickListener {
+        binding?.btnLoadCat?.setOnClickListener {
             viewModel.getRandomCat()
         }
 
-        binding.btnProUser.setOnClickListener {
+        binding?.btnProUser?.setOnClickListener {
             if(requireActivity() is LauncherCatActivity) {
                 findNavController()
                     .navigate(R.id.randomCatFragment_to_advanceCatFragment)
@@ -84,4 +80,8 @@ class RandomCatFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        binding = null
+        super.onDestroy()
+    }
 }

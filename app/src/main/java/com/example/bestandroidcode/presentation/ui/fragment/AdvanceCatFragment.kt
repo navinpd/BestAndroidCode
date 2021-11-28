@@ -8,6 +8,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.RequestManager
 import com.example.bestandroidcode.R
 import com.example.bestandroidcode.data.remote.model.Cat
@@ -15,7 +16,6 @@ import com.example.bestandroidcode.databinding.AdvanceFragmentBinding
 import com.example.bestandroidcode.presentation.ui.activities.LauncherCatActivity
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel
 import com.example.bestandroidcode.util.hideKeyboard
-import com.example.bestandroidcode.util.obtainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,12 +29,8 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
     private var variableA: Int = 0
     private var variableB: Int = 0
 
-    private val viewModel: MainViewModel by lazy {
-        obtainViewModel(
-            requireActivity(),
-            MainViewModel::class.java,
-            defaultViewModelProviderFactory
-        )
+    private val viewModel by viewModels<MainViewModel> {
+        defaultViewModelProviderFactory
     }
 
     @Inject
