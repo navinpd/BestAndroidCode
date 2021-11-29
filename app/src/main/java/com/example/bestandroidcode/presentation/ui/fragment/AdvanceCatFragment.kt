@@ -23,7 +23,7 @@ import javax.inject.Inject
 class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
 
     var currentCatObject: Cat? = null
-    private lateinit var viewBinding: AdvanceFragmentBinding
+    private var viewBinding: AdvanceFragmentBinding? = null
     private val categoryIdList = arrayOf(5, 15, 1, 14, 2, 4, 7)
     private var selectedCategoryId: Int = -1
     private var variableA: Int = 0
@@ -43,16 +43,16 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
         viewBinding = AdvanceFragmentBinding.bind(view)
         generateQuestion()
         categoryList = resources.getStringArray(R.array.cat_category)
-        val mergedCatIV = viewBinding.container.ivCat
+        val mergedCatIV = viewBinding?.container?.ivCat
 
         viewModel.categoryCatLiveData.observe(viewLifecycleOwner, { value ->
             Log.d(javaClass.simpleName, "Fragment $value")
             when (value) {
                 is MainViewModel.CurrentViewState.ShowLoading -> {
-                    viewBinding.progressBar.visibility = View.VISIBLE
+                    viewBinding?.progressBar?.visibility = View.VISIBLE
                 }
                 is MainViewModel.CurrentViewState.HideLoading -> {
-                    viewBinding.progressBar.visibility = View.GONE
+                    viewBinding?.progressBar?.visibility = View.GONE
                 }
                 is MainViewModel.CurrentViewState.ShowError -> {
                     Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
@@ -61,11 +61,13 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
                     val activity = activity as LauncherCatActivity
                     currentCatObject = value.item
                     activity.refreshFavoriteButton(currentCatObject!!.url)
-                    glide.load(value.item?.url)
-                        .into(mergedCatIV)
+                    mergedCatIV?.let {
+                        glide.load(value.item?.url)
+                            .into(it)
+                    }
 
                     generateQuestion()
-                    viewBinding.etAnswer.setText("")
+                    viewBinding?.etAnswer?.setText("")
                 }
             }
         })
@@ -73,9 +75,9 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
         val adapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        viewBinding.spCategory.adapter = adapter
+        viewBinding?.spCategory?.adapter = adapter
 
-        viewBinding.spCategory.onItemSelectedListener = object : OnItemSelectedListener {
+        viewBinding?.spCategory?.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View,
@@ -88,8 +90,8 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        viewBinding.btnAnswer.setOnClickListener {
-            val answer = viewBinding.etAnswer.text.toString().toIntOrNull()
+        viewBinding?.btnAnswer?.setOnClickListener {
+            val answer = viewBinding?.etAnswer?.text.toString().toIntOrNull()
 
             if (answer != null && variableA + variableB == answer) {
                 hideKeyboard()
@@ -110,7 +112,12 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
         variableA = (0..10).random()
         variableB = (0..10).random()
 
-        viewBinding.tvQuestion.text = getString(R.string.math_question, variableA, variableB)
+        viewBinding?.tvQuestion?.text = getString(R.string.math_question, variableA, variableB)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewBinding = null
     }
 
 }
