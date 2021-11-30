@@ -14,6 +14,8 @@ internal object CatTestData {
         height = 283,
     )
 
+    val listofCat = mutableListOf(cat)
+
     val throwable = Throwable(errorMessage)
 
     val successCatResponse = CatResponse(cat, null)

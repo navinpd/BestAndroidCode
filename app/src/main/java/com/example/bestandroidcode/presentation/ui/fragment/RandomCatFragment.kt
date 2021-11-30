@@ -29,7 +29,7 @@ class RandomCatFragment : Fragment() {
     @Inject
     lateinit var glide: RequestManager
 
-    private var currentCatObject: Cat? = null
+    var currentCatObject: Cat? = null
     private var binding: MainFragmentBinding? = null
 
     override fun onCreateView(
