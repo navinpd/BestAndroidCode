@@ -39,7 +39,7 @@ class DataRepositoryTest : TestCase() {
     @Mock
     private var coroutineDispatcher: CoroutineDispatcher? = null
 
-    lateinit var dataRepository: DataRepository
+    private lateinit var dataRepository: DataRepository
 
 
     @Before
