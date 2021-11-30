@@ -14,6 +14,8 @@ ext {
     gsonVersion = "2.9.0"
     coroutineVersion = "1.5.0"
 
+    ktxLifecyleVersion = "2.4.0"
+
     cardViewVersion = "1.0.0"
     nav_version = "2.3.5"
 

@@ -21,9 +21,9 @@ class MainViewModelTest : TestCase() {
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
     @Mock
-    var repository : DataRepository? = null
+    var repository: DataRepository? = null
 
-    lateinit var mainViewModel : MainViewModel
+    lateinit var mainViewModel: MainViewModel
 
     @Before
     public override fun setUp() {

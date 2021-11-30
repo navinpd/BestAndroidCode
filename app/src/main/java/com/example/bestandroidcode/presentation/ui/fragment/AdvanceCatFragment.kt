@@ -45,33 +45,6 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
         categoryList = resources.getStringArray(R.array.cat_category)
         val mergedCatIV = viewBinding?.container?.ivCat
 
-        viewModel.categoryCatLiveData.observe(viewLifecycleOwner, { value ->
-            Log.d(javaClass.simpleName, "Fragment $value")
-            when (value) {
-                is MainViewModel.CurrentViewState.ShowLoading -> {
-                    viewBinding?.progressBar?.visibility = View.VISIBLE
-                }
-                is MainViewModel.CurrentViewState.HideLoading -> {
-                    viewBinding?.progressBar?.visibility = View.GONE
-                }
-                is MainViewModel.CurrentViewState.ShowError -> {
-                    Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
-                }
-                is MainViewModel.CurrentViewState.ShowData -> {
-                    val activity = activity as LauncherCatActivity
-                    currentCatObject = value.item
-                    activity.refreshFavoriteButton(currentCatObject!!.url)
-                    mergedCatIV?.let {
-                        glide.load(value.item?.url)
-                            .into(it)
-                    }
-
-                    generateQuestion()
-                    viewBinding?.etAnswer?.setText("")
-                }
-            }
-        })
-
         val adapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -97,6 +70,32 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
                 hideKeyboard()
 
                 viewModel.getCatByCategory(selectedCategoryId.toString())
+                    .observe(viewLifecycleOwner, { value ->
+                        Log.d(javaClass.simpleName, "Fragment $value")
+                        when (value) {
+                            is MainViewModel.CurrentViewState.ShowLoading -> {
+                                viewBinding?.progressBar?.visibility = View.VISIBLE
+                            }
+                            is MainViewModel.CurrentViewState.HideLoading -> {
+                                viewBinding?.progressBar?.visibility = View.GONE
+                            }
+                            is MainViewModel.CurrentViewState.ShowError -> {
+                                Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
+                            }
+                            is MainViewModel.CurrentViewState.ShowData -> {
+                                val activity = activity as LauncherCatActivity
+                                currentCatObject = value.item
+                                activity.refreshFavoriteButton(currentCatObject!!.url)
+                                mergedCatIV?.let {
+                                    glide.load(value.item?.url)
+                                        .into(it)
+                                }
+
+                                generateQuestion()
+                                viewBinding?.etAnswer?.setText("")
+                            }
+                        }
+                    })
             } else {
                 Toast.makeText(
                     activity,

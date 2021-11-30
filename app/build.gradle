@@ -54,6 +54,9 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constrainLayout"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleModelVersion"
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$ktxLifecyleVersion")
+
     //cardView
     implementation "androidx.cardview:cardview:$cardViewVersion"
 

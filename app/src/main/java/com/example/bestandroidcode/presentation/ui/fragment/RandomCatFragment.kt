@@ -45,31 +45,29 @@ class RandomCatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mergedCatIV = binding?.container?.ivCat
 
-        viewModel.randomCatLiveData.observe(viewLifecycleOwner, { value ->
-            Log.d(javaClass.simpleName, "Fragment $value")
-            when(value) {
-                is MainViewModel.CurrentViewState.ShowLoading -> {
-                    binding?.progressBar?.visibility = View.VISIBLE
-                }
-                is MainViewModel.CurrentViewState.HideLoading -> {
-                    binding?.progressBar?.visibility = View.GONE
-                }
-                is MainViewModel.CurrentViewState.ShowError -> {
-                    Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
-                }
-                is MainViewModel.CurrentViewState.ShowData -> {
-                    val activity = activity as LauncherCatActivity
-                    currentCatObject = value.item
-                    activity.refreshFavoriteButton(currentCatObject!!.url)
-                    glide.load(value.item?.url)
-                        .into(mergedCatIV?.ivCat!!)
-                }
-            }
-
-        })
-
         binding?.btnLoadCat?.setOnClickListener {
-            viewModel.getRandomCat()
+            viewModel.getRandomCat().observe(viewLifecycleOwner, { value ->
+                Log.d(javaClass.simpleName, "Fragment $value")
+                when(value) {
+                    is MainViewModel.CurrentViewState.ShowLoading -> {
+                        binding?.progressBar?.visibility = View.VISIBLE
+                    }
+                    is MainViewModel.CurrentViewState.HideLoading -> {
+                        binding?.progressBar?.visibility = View.GONE
+                    }
+                    is MainViewModel.CurrentViewState.ShowError -> {
+                        Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
+                    }
+                    is MainViewModel.CurrentViewState.ShowData -> {
+                        val activity = activity as LauncherCatActivity
+                        currentCatObject = value.item
+                        activity.refreshFavoriteButton(currentCatObject!!.url)
+                        glide.load(value.item?.url)
+                            .into(mergedCatIV?.ivCat!!)
+                    }
+                }
+
+            })
         }
 
         binding?.btnProUser?.setOnClickListener {
