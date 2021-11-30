@@ -22,4 +22,6 @@ internal object CatTestData {
 
     val failedCatResponse = CatResponse(null, throwable)
 
+    const val category = "CATEGORY"
+
 }

@@ -2,12 +2,15 @@ package com.example.bestandroidcode.data.remote.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.bestandroidcode.CatTestData
+import com.example.bestandroidcode.CatTestData.category
 import com.example.bestandroidcode.data.remote.api.CatAPI
 import com.example.bestandroidcode.data.remote.model.Cat
 import junit.framework.TestCase
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -17,7 +20,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 
@@ -25,7 +27,6 @@ import retrofit2.Response
 class DataRepositoryTest : TestCase() {
     @get:Rule
     val rule = InstantTaskExecutorRule()
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
     @Mock
     lateinit var catApi: CatAPI
@@ -36,57 +37,71 @@ class DataRepositoryTest : TestCase() {
     @Mock
     private var result: Response<List<Cat>>? = null
 
-    @Mock
-    private var coroutineDispatcher: CoroutineDispatcher? = null
+    private var coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 
-    private lateinit var dataRepository: DataRepository
+    private lateinit var subject: DataRepository
 
 
     @Before
     public override fun setUp() {
-        Dispatchers.setMain(mainThreadSurrogate)
-        dataRepository = DataRepository(catApi = catApi, io = coroutineDispatcher!!)
+        subject = DataRepository(catApi = catApi, io = coroutineDispatcher!!)
         `when`(catApi.getCatRandom()).thenReturn(apiCall)
+        `when`(catApi.getCatBasedOnCategory(category)).thenReturn(apiCall)
 
-        `when`(apiCall!!.execute()).then {
-            (it.arguments[0] as Callback<List<Cat>>)
-                .onResponse(apiCall, result)
-        }
+        `when`(apiCall!!.execute()).thenReturn(result)
 
-        `when`(result?.isSuccessful).thenReturn(true)
         `when`(result?.body()).thenReturn(CatTestData.listofCat)
-
-        catApi.getCatRandom()
+        `when`(result?.message()).thenReturn(CatTestData.errorMessage)
     }
 
-    @ExperimentalCoroutinesApi
     @Test
-    fun `test success fetchRandomCat`() = runBlocking {
-        val catResponse = dataRepository.fetchRandomCat()
-        assertEquals("Exception found", catResponse.throwable, null)
+    fun `test success fetchRandomCat`() = runTest {
+        //Mock
+        `when`(result?.isSuccessful).thenReturn(true)
+        //Execute
+        val catResponse = subject.fetchRandomCat()
+        //Validate
+        assertNull("Exception found", catResponse.throwable)
         assertEquals("Cat id mismatched", catResponse.cat?.id, CatTestData.cat.id)
     }
 
     @Test
-    fun `test failed fetchRandomCat`() {
-
+    fun `test failed fetchRandomCat`() = runBlocking {
+        //Mock
+        `when`(result?.isSuccessful).thenReturn(false)
+        //Execute
+        val catResponse = subject.fetchRandomCat()
+        //Validate
+        assertNotNull("Exception not found", catResponse.throwable)
+        assertEquals("Cat id mismatched", catResponse.throwable?.message, CatTestData.errorMessage)
     }
 
 
     @Test
-    fun `test success getCatByCategory`() {
-
+    fun `test success getCatByCategory`() = runBlocking {
+        //Mock
+        `when`(result?.isSuccessful).thenReturn(true)
+        //Execute
+        val catResponse = subject.getCatByCategory(category)
+        //Validate
+        assertNull("Exception found", catResponse.throwable)
+        assertEquals("Cat id mismatched", catResponse.cat?.id, CatTestData.cat.id)
     }
 
     @Test
-    fun `test failed getCatByCategory`() {
-
+    fun `test failed getCatByCategory`() = runBlocking {
+        //Mock
+        `when`(result?.isSuccessful).thenReturn(false)
+        //Execute
+        val catResponse = subject.getCatByCategory(category)
+        //Validate
+        assertNotNull("Exception not found", catResponse.throwable)
+        assertEquals("Cat id mismatched", catResponse.throwable?.message, CatTestData.errorMessage)
     }
 
 
     @After
     public override fun tearDown() {
         Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
-        mainThreadSurrogate.close()
     }
 }

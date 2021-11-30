@@ -2,6 +2,7 @@ package com.example.bestandroidcode.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.bestandroidcode.CatTestData
+import com.example.bestandroidcode.CatTestData.category
 import com.example.bestandroidcode.CatTestData.errorMessage
 import com.example.bestandroidcode.CoroutineTestRule
 import com.example.bestandroidcode.data.remote.repository.DataRepository
@@ -34,7 +35,6 @@ class MainViewModelTest : TestCase() {
 
     private lateinit var subject: MainViewModel
     private var stateInvocationCount = 0;
-    private val category = "CATEGORY"
     private lateinit var randomCatObserver: Observer1<in MainViewModel.CurrentViewState>
     private lateinit var specialCatObserver: Observer1<in MainViewModel.CurrentViewState>
 
