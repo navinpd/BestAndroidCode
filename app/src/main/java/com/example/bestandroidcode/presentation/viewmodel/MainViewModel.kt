@@ -13,6 +13,17 @@ class MainViewModel @Inject constructor(
     private val repository: DataRepository
 ) : ViewModel() {
 
+//Another way of getting data from repository
+//    private val catCompletableDeferred = CompletableDeferred<CatResponse>()
+//
+//    suspend fun getRandomCat(): CatResponse {
+//        viewModelScope.launch {
+//            val catResponse = repository.fetchRandomCat()
+//            catCompletableDeferred.complete(catResponse)
+//        }
+//        return catCompletableDeferred.await()
+//    }
+
     fun getRandomCat() = liveData {
         emit(ShowLoading)
         val catResponse = repository.fetchRandomCat()

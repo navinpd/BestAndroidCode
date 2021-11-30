@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.example.bestandroidcode.R
@@ -45,10 +46,17 @@ class RandomCatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mergedCatIV = binding?.container?.ivCat
 
+        lifecycleScope.launchWhenStarted {
+            val drama = viewModel.startDrama()
+            Toast.makeText(activity, drama.cat?.id, Toast.LENGTH_LONG).show()
+
+            glide.load(drama.cat?.url).into(mergedCatIV?.ivCat!!)
+        }
+
         binding?.btnLoadCat?.setOnClickListener {
             viewModel.getRandomCat().observe(viewLifecycleOwner, { value ->
                 Log.d(javaClass.simpleName, "Fragment $value")
-                when(value) {
+                when (value) {
                     is MainViewModel.CurrentViewState.ShowLoading -> {
                         binding?.progressBar?.visibility = View.VISIBLE
                     }
@@ -71,7 +79,7 @@ class RandomCatFragment : Fragment() {
         }
 
         binding?.btnProUser?.setOnClickListener {
-            if(requireActivity() is LauncherCatActivity) {
+            if (requireActivity() is LauncherCatActivity) {
                 findNavController()
                     .navigate(R.id.randomCatFragment_to_advanceCatFragment)
             }
