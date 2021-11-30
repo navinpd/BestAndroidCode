@@ -40,27 +40,25 @@ class LauncherCatActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_favorite -> {
 
-            val currentFavoriteList = sharedPref.getStringSet(favList, HashSet())
+            val currentFavoriteList = HashSet<String>(sharedPref.getStringSet(favList, HashSet<String>()))
 
             val hostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+            val fragment = hostFragment?.childFragmentManager?.fragments?.get(0)
             var catImageUrl = ""
-            if (hostFragment?.childFragmentManager?.fragments?.get(0) is RandomCatFragment
-                && (hostFragment.childFragmentManager.fragments[0] as RandomCatFragment).currentCatObject != null
-            ) {
-                catImageUrl =
-                    (hostFragment.childFragmentManager.fragments[0] as RandomCatFragment).currentCatObject!!.url
 
-            } else if (hostFragment?.childFragmentManager?.fragments?.get(0) is AdvanceCatFragment &&
-                (hostFragment.childFragmentManager.fragments[0] as AdvanceCatFragment).currentCatObject != null
-            ) {
-                catImageUrl =
-                    (hostFragment.childFragmentManager.fragments[0] as AdvanceCatFragment).currentCatObject!!.url
+            if (fragment is RandomCatFragment && fragment.currentCatObject != null) {
+                catImageUrl = fragment.currentCatObject!!.url
+
+            } else if (fragment is AdvanceCatFragment && fragment.currentCatObject != null) {
+                catImageUrl = fragment.currentCatObject!!.url
+
             }
+
             if (catImageUrl.isNotEmpty() && catImageUrl.isNotBlank()) {
-                if (currentFavoriteList!!.contains(catImageUrl)) {
-                    currentFavoriteList!!.remove(catImageUrl)
+                if (currentFavoriteList.contains(catImageUrl)) {
+                    currentFavoriteList.remove(catImageUrl)
                 } else {
-                    currentFavoriteList!!.add(catImageUrl)
+                    currentFavoriteList.add(catImageUrl)
                 }
 
                 val e: SharedPreferences.Editor = sharedPref.edit()

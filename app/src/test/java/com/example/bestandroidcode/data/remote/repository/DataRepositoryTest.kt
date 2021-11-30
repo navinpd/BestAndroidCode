@@ -32,12 +32,12 @@ class DataRepositoryTest : TestCase() {
     lateinit var catApi: CatAPI
 
     @Mock
-    private var apiCall: Call<List<Cat>>? = null
+    private val apiCall: Call<List<Cat>>? = null
 
     @Mock
-    private var result: Response<List<Cat>>? = null
+    private val result: Response<List<Cat>>? = null
 
-    private var coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     private lateinit var subject: DataRepository
 

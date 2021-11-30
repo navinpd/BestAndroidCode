@@ -14,11 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".presentation.ui.activities.FavoriteListActivity">
+        <activity
+            android:name=".presentation.ui.activities.FavoriteListActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".presentation.ui.activities.LauncherCatActivity"
-            android:exported="true">
+        <activity
+            android:name=".presentation.ui.activities.LauncherCatActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

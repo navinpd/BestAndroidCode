@@ -2,14 +2,13 @@ package com.example.bestandroidcode.data.remote.repository
 
 import com.example.bestandroidcode.data.remote.api.CatAPI
 import com.example.bestandroidcode.data.remote.model.CatResponse
-import com.example.bestandroidcode.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DataRepository @Inject constructor(
     private val catApi: CatAPI,
-    @IoDispatcher private val io: CoroutineDispatcher
+    private val io: CoroutineDispatcher
 ) {
 
     suspend fun fetchRandomCat(): CatResponse = withContext(io) {
