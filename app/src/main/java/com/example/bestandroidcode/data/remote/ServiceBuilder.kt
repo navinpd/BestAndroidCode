@@ -16,7 +16,7 @@ object ServiceBuilder {
                 })
         .build()
 
-    private val baseUrl = "https://api.thecatapi.com/"
+    private const val baseUrl = "https://api.thecatapi.com/"
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)

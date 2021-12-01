@@ -8,7 +8,7 @@ import com.example.bestandroidcode.data.remote.model.Cat
 import junit.framework.TestCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -55,6 +55,7 @@ class DataRepositoryTest : TestCase() {
     }
 
     @Test
+    @ExperimentalCoroutinesApi
     fun `test success fetchRandomCat`() = runTest {
         //Mock
         `when`(result?.isSuccessful).thenReturn(true)
@@ -66,7 +67,8 @@ class DataRepositoryTest : TestCase() {
     }
 
     @Test
-    fun `test failed fetchRandomCat`() = runBlocking {
+    @ExperimentalCoroutinesApi
+    fun `test failed fetchRandomCat`() = runTest {
         //Mock
         `when`(result?.isSuccessful).thenReturn(false)
         //Execute
@@ -78,7 +80,8 @@ class DataRepositoryTest : TestCase() {
 
 
     @Test
-    fun `test success getCatByCategory`() = runBlocking {
+    @ExperimentalCoroutinesApi
+    fun `test success getCatByCategory`() = runTest {
         //Mock
         `when`(result?.isSuccessful).thenReturn(true)
         //Execute
@@ -89,7 +92,8 @@ class DataRepositoryTest : TestCase() {
     }
 
     @Test
-    fun `test failed getCatByCategory`() = runBlocking {
+    @ExperimentalCoroutinesApi
+    fun `test failed getCatByCategory`() = runTest {
         //Mock
         `when`(result?.isSuccessful).thenReturn(false)
         //Execute

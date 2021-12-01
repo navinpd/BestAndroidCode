@@ -2,4 +2,4 @@ package com.example.bestandroidcode.util
 
 
 
-val favList = "FAVORITE_LIST"
+const val favList = "FAVORITE_LIST"

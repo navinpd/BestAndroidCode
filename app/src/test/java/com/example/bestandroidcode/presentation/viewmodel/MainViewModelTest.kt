@@ -62,24 +62,7 @@ class MainViewModelTest : TestCase() {
 
         randomCatObserver = object : Observer, Observer1<MainViewModel.CurrentViewState> {
             override fun onChanged(it: MainViewModel.CurrentViewState?) {
-                when (it) {
-                    is MainViewModel.CurrentViewState.ShowLoading -> {
-                        stateInvocationCount++
-                    }
-                    is MainViewModel.CurrentViewState.HideLoading -> {
-                        stateInvocationCount++
-                        assertEquals(stateInvocationCount, 2)
-                    }
-                    is MainViewModel.CurrentViewState.ShowError -> {
-                        assertTrue(false)
-                    }
-                    is MainViewModel.CurrentViewState.ShowData -> {
-                        stateInvocationCount++
-                        assertEquals(it.item?.id, CatTestData.cat.id)
-                        assertEquals(stateInvocationCount, 3)
-                    }
-                    null -> assertTrue(false)
-                }
+                verifyResponse(it, true)
             }
 
             override fun update(p0: Observable?, p1: Any?) {
@@ -98,24 +81,7 @@ class MainViewModelTest : TestCase() {
 
         randomCatObserver = object : Observer, Observer1<MainViewModel.CurrentViewState> {
             override fun onChanged(it: MainViewModel.CurrentViewState?) {
-                when (it) {
-                    is MainViewModel.CurrentViewState.ShowLoading -> {
-                        stateInvocationCount++
-                    }
-                    is MainViewModel.CurrentViewState.HideLoading -> {
-                        stateInvocationCount++
-                        assertEquals(stateInvocationCount, 2)
-                    }
-                    is MainViewModel.CurrentViewState.ShowError -> {
-                        stateInvocationCount++
-                        assertEquals(it.message, errorMessage)
-                        assertEquals(stateInvocationCount, 3)
-                    }
-                    is MainViewModel.CurrentViewState.ShowData -> {
-                        assertTrue(false)
-                    }
-                    null -> assertTrue(false)
-                }
+                verifyResponse(it, false)
             }
 
             override fun update(p0: Observable?, p1: Any?) {
@@ -133,24 +99,7 @@ class MainViewModelTest : TestCase() {
         }
         specialCatObserver = object : Observer, Observer1<MainViewModel.CurrentViewState> {
             override fun onChanged(it: MainViewModel.CurrentViewState?) {
-                when (it) {
-                    is MainViewModel.CurrentViewState.ShowLoading -> {
-                        stateInvocationCount++
-                    }
-                    is MainViewModel.CurrentViewState.HideLoading -> {
-                        stateInvocationCount++
-                        assertEquals(stateInvocationCount, 2)
-                    }
-                    is MainViewModel.CurrentViewState.ShowError -> {
-                        assertTrue(false)
-                    }
-                    is MainViewModel.CurrentViewState.ShowData -> {
-                        stateInvocationCount++
-                        assertEquals(it.item?.id, CatTestData.cat.id)
-                        assertEquals(stateInvocationCount, 3)
-                    }
-                    null -> assertTrue(false)
-                }
+                verifyResponse(it, true)
             }
 
             override fun update(p0: Observable?, p1: Any?) {
@@ -169,24 +118,7 @@ class MainViewModelTest : TestCase() {
         }
         specialCatObserver = object : Observer, Observer1<MainViewModel.CurrentViewState> {
             override fun onChanged(it: MainViewModel.CurrentViewState?) {
-                when (it) {
-                    is MainViewModel.CurrentViewState.ShowLoading -> {
-                        stateInvocationCount++
-                    }
-                    is MainViewModel.CurrentViewState.HideLoading -> {
-                        stateInvocationCount++
-                        assertEquals(stateInvocationCount, 2)
-                    }
-                    is MainViewModel.CurrentViewState.ShowError -> {
-                        stateInvocationCount++
-                        assertEquals(it.message, errorMessage)
-                        assertEquals(stateInvocationCount, 3)
-                    }
-                    is MainViewModel.CurrentViewState.ShowData -> {
-                        assertTrue(false)
-                    }
-                    null -> assertTrue(false)
-                }
+                verifyResponse(it, false)
             }
 
             override fun update(p0: Observable?, p1: Any?) {
@@ -195,6 +127,37 @@ class MainViewModelTest : TestCase() {
         }
 
         subject.getCatByCategory(category).observeForever(specialCatObserver)
+    }
+
+    fun verifyResponse(it : MainViewModel.CurrentViewState?, isSuccess: Boolean) {
+        when (it) {
+            is MainViewModel.CurrentViewState.ShowLoading -> {
+                stateInvocationCount++
+            }
+            is MainViewModel.CurrentViewState.HideLoading -> {
+                stateInvocationCount++
+                assertEquals(stateInvocationCount, 2)
+            }
+            is MainViewModel.CurrentViewState.ShowError -> {
+                if(isSuccess) {
+                    assertTrue(false)
+                } else {
+                    stateInvocationCount++
+                    assertEquals(it.message, errorMessage)
+                    assertEquals(stateInvocationCount, 3)
+                }
+            }
+            is MainViewModel.CurrentViewState.ShowData -> {
+                if(isSuccess) {
+                    stateInvocationCount++
+                    assertEquals(it.item?.id, CatTestData.cat.id)
+                    assertEquals(stateInvocationCount, 3)
+                } else {
+                    assertTrue(false)
+                }
+            }
+            null -> assertTrue(false)
+        }
     }
 
 }

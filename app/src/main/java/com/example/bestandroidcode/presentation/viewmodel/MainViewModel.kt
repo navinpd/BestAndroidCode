@@ -32,7 +32,7 @@ class MainViewModel @Inject constructor(
         if (catResponse.throwable == null)
             emit(ShowData(catResponse.cat))
         else
-            emit(ShowError(catResponse.throwable!!.message ?: "Unknown Error"))
+            emit(ShowError(catResponse.throwable.message ?: "Unknown Error"))
     }
 
     fun getCatByCategory(categoryId: String) = liveData {
