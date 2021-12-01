@@ -3,6 +3,7 @@ package com.example.bestandroidcode.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.bestandroidcode.data.remote.model.Cat
+import com.example.bestandroidcode.data.remote.model.CatResponse
 import com.example.bestandroidcode.data.remote.repository.DataRepository
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel.CurrentViewState.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +27,11 @@ class MainViewModel @Inject constructor(
 
     fun getRandomCat() = liveData {
         emit(ShowLoading)
-        val catResponse = repository.fetchRandomCat()
+        val catResponse = try {
+            repository.fetchRandomCat()
+        } catch (exception: Throwable) {
+            CatResponse(null, exception)
+        }
         emit(HideLoading)
 
         if (catResponse.throwable == null)
@@ -37,7 +42,11 @@ class MainViewModel @Inject constructor(
 
     fun getCatByCategory(categoryId: String) = liveData {
         emit(ShowLoading)
-        val catResponse = repository.getCatByCategory(categoryId)
+        val catResponse = try {
+            repository.getCatByCategory(categoryId)
+        } catch (exception: Throwable) {
+            CatResponse(null, exception)
+        }
         emit(HideLoading)
 
         if (catResponse.throwable == null) {
