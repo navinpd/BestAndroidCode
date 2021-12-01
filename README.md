@@ -24,3 +24,5 @@ The current project is developed on MVVM architecture.
 * The minSdkVersion is 23 (Android M). So you can install it in Android M and above devices.
 * The application is tested in Android 10 and 11 devices.
 
+## Preview
+<img src="cat.gif" align="left" height="600px">
