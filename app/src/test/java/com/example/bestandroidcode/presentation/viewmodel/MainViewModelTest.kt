@@ -34,7 +34,7 @@ class MainViewModelTest : TestCase() {
     var repository: DataRepository? = null
 
     private lateinit var subject: MainViewModel
-    private var stateInvocationCount = 0;
+    private var stateInvocationCount = 0
     private lateinit var randomCatObserver: Observer1<in MainViewModel.CurrentViewState>
     private lateinit var specialCatObserver: Observer1<in MainViewModel.CurrentViewState>
 
@@ -55,10 +55,8 @@ class MainViewModelTest : TestCase() {
 
     @Test
     fun `test Successful Random Cat response`() = runBlocking {
-        runBlocking {
-            `when`(repository!!.fetchRandomCat())
-                .thenReturn(CatTestData.successCatResponse)
-        }
+        `when`(repository!!.fetchRandomCat())
+            .thenReturn(CatTestData.successCatResponse)
 
         randomCatObserver = object : Observer, Observer1<MainViewModel.CurrentViewState> {
             override fun onChanged(it: MainViewModel.CurrentViewState?) {
@@ -74,10 +72,8 @@ class MainViewModelTest : TestCase() {
 
     @Test
     fun `test Failed Random Cat response`() = runBlocking {
-        runBlocking {
-            `when`(repository!!.fetchRandomCat())
-                .thenReturn(CatTestData.failedCatResponse)
-        }
+        `when`(repository!!.fetchRandomCat())
+            .thenReturn(CatTestData.failedCatResponse)
 
         randomCatObserver = object : Observer, Observer1<MainViewModel.CurrentViewState> {
             override fun onChanged(it: MainViewModel.CurrentViewState?) {
@@ -93,10 +89,8 @@ class MainViewModelTest : TestCase() {
 
     @Test
     fun `test Successful Cat ByCategory`() = runBlocking {
-        runBlocking {
-            `when`(repository!!.getCatByCategory(category))
-                .thenReturn(CatTestData.successCatResponse)
-        }
+        `when`(repository!!.getCatByCategory(category))
+            .thenReturn(CatTestData.successCatResponse)
         specialCatObserver = object : Observer, Observer1<MainViewModel.CurrentViewState> {
             override fun onChanged(it: MainViewModel.CurrentViewState?) {
                 verifyResponse(it, true)
@@ -112,10 +106,8 @@ class MainViewModelTest : TestCase() {
 
     @Test
     fun `test Failed Cat ByCategory`() = runBlocking {
-        runBlocking {
-            `when`(repository!!.getCatByCategory(category))
-                .thenReturn(CatTestData.failedCatResponse)
-        }
+        `when`(repository!!.getCatByCategory(category))
+            .thenReturn(CatTestData.failedCatResponse)
         specialCatObserver = object : Observer, Observer1<MainViewModel.CurrentViewState> {
             override fun onChanged(it: MainViewModel.CurrentViewState?) {
                 verifyResponse(it, false)
@@ -129,7 +121,7 @@ class MainViewModelTest : TestCase() {
         subject.getCatByCategory(category).observeForever(specialCatObserver)
     }
 
-    fun verifyResponse(it : MainViewModel.CurrentViewState?, isSuccess: Boolean) {
+    fun verifyResponse(it: MainViewModel.CurrentViewState?, isSuccess: Boolean) {
         when (it) {
             is MainViewModel.CurrentViewState.ShowLoading -> {
                 stateInvocationCount++
@@ -139,7 +131,7 @@ class MainViewModelTest : TestCase() {
                 assertEquals(stateInvocationCount, 2)
             }
             is MainViewModel.CurrentViewState.ShowError -> {
-                if(isSuccess) {
+                if (isSuccess) {
                     assertTrue(false)
                 } else {
                     stateInvocationCount++
@@ -148,7 +140,7 @@ class MainViewModelTest : TestCase() {
                 }
             }
             is MainViewModel.CurrentViewState.ShowData -> {
-                if(isSuccess) {
+                if (isSuccess) {
                     stateInvocationCount++
                     assertEquals(it.item?.id, CatTestData.cat.id)
                     assertEquals(stateInvocationCount, 3)
