@@ -1,4 +1,4 @@
-package com.example.bestandroidcode
+package com.example.bestandroidcode.util
 
 import com.example.bestandroidcode.data.remote.model.Cat
 import com.example.bestandroidcode.data.remote.model.CatResponse

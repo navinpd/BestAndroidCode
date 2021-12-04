@@ -1,4 +1,4 @@
-package com.example.bestandroidcode
+package com.example.bestandroidcode.util
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

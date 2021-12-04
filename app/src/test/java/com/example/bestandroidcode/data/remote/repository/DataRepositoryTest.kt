@@ -1,8 +1,8 @@
 package com.example.bestandroidcode.data.remote.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.bestandroidcode.CatTestData
-import com.example.bestandroidcode.CatTestData.category
+import com.example.bestandroidcode.util.CatTestData
+import com.example.bestandroidcode.util.CatTestData.category
 import com.example.bestandroidcode.data.remote.api.CatAPI
 import com.example.bestandroidcode.data.remote.model.Cat
 import junit.framework.TestCase

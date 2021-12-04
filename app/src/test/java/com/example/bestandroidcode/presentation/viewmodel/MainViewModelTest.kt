@@ -1,11 +1,11 @@
 package com.example.bestandroidcode.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.bestandroidcode.CatTestData
-import com.example.bestandroidcode.CatTestData.category
-import com.example.bestandroidcode.CatTestData.errorMessage
-import com.example.bestandroidcode.CoroutineTestRule
 import com.example.bestandroidcode.data.remote.repository.DataRepository
+import com.example.bestandroidcode.util.CatTestData
+import com.example.bestandroidcode.util.CatTestData.category
+import com.example.bestandroidcode.util.CatTestData.errorMessage
+import com.example.bestandroidcode.util.CoroutineTestRule
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
