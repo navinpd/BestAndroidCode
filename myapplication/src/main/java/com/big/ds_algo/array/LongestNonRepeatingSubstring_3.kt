@@ -1,6 +1,6 @@
 package com.big.ds_algo.array
 
-class LongestSubstring_3 {
+class LongestNonRepeatingSubstring_3 {
 
     companion object {
         @JvmStatic
