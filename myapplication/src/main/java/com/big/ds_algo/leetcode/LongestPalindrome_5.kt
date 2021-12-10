@@ -1,4 +1,4 @@
-package com.big.ds_algo.array
+package com.big.ds_algo.leetcode
 
 class LongestPalindrome_5 {
 

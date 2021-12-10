@@ -1,4 +1,4 @@
-package com.big.ds_algo.array
+package com.big.ds_algo.leetcode
 
 internal class ContainerWithMostWater_11 {
 
