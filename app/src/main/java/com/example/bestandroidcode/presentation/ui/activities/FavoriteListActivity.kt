@@ -2,6 +2,7 @@ package com.example.bestandroidcode.presentation.ui.activities
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,9 @@ class FavoriteListActivity : AppCompatActivity() {
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = FavoriteCatAdapter(currentFavoriteList!!.toTypedArray())
+
+        if (currentFavoriteList.isNotEmpty())
+            noCatMessage.visibility = View.GONE
 
         rvFavorite.layoutManager = viewManager
         rvFavorite.adapter = viewAdapter

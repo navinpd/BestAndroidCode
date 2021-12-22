@@ -34,6 +34,17 @@
         app:layout_constraintRight_toLeftOf="@id/spCategory"
         app:layout_constraintStart_toStartOf="@id/tvQuestion" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/noAdvanceCatSelected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/no_cat_selected_yet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Spinner
         android:id="@+id/spCategory"
         android:layout_width="wrap_content"
@@ -57,7 +68,7 @@
         android:id="@+id/etAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="100dp"
         android:gravity="center"
         android:hint="@string/answer"
         android:inputType="number"

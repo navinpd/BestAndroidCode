@@ -18,6 +18,7 @@ import com.example.bestandroidcode.presentation.ui.activities.LauncherCatActivit
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.cat_view.view.*
+import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,10 +49,10 @@ class RandomCatFragment : Fragment() {
         mergedCatIV = binding?.container?.ivCat
 
 //        lifecycleScope.launchWhenStarted {
-//            val drama = viewModel.getRandomCat()
-//            Toast.makeText(activity, drama.cat?.id, Toast.LENGTH_LONG).show()
+//            val random = viewModel.getRandomCat()
+//            Toast.makeText(activity, random.cat?.id, Toast.LENGTH_LONG).show()
 //
-//            glide.load(drama.cat?.url).into(mergedCatIV?.ivCat!!)
+//            glide.load(random.cat?.url).into(mergedCatIV?.ivCat!!)
 //        }
 
         binding?.btnLoadCat?.setOnClickListener {
@@ -73,6 +74,7 @@ class RandomCatFragment : Fragment() {
                         activity.refreshFavoriteButton(currentCatObject!!.url)
                         glide.load(value.item?.url)
                             .into(mergedCatIV?.ivCat!!)
+                        noCatSelected.visibility = View.GONE
                     }
                 }
 

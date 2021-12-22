@@ -9,6 +9,8 @@
     <string name="category">Category</string>
     <string name="answer">Answer</string>
     <string name="tap_me">Tap Me!</string>
+    <string name="no_favourite_cat_selected_yet">No favourite cat selected yet</string>
+    <string name="no_cat_selected_yet">No cat selected yet</string>
 
     <!--    String Arrays-->
     <string-array name="cat_category">

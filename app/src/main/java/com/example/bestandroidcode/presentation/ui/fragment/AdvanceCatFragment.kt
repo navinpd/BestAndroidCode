@@ -17,6 +17,7 @@ import com.example.bestandroidcode.presentation.ui.activities.LauncherCatActivit
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel
 import com.example.bestandroidcode.util.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.advance_fragment.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -90,6 +91,7 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
                                     glide.load(value.item?.url)
                                         .into(it)
                                 }
+                                noAdvanceCatSelected.visibility = View.GONE
 
                                 generateQuestion()
                                 viewBinding?.etAnswer?.setText("")

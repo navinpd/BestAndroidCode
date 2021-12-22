@@ -1,6 +1,7 @@
 package com.example.bestandroidcode.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.bumptech.glide.Glide
 import com.example.bestandroidcode.data.remote.ServiceBuilder
 import com.example.bestandroidcode.data.remote.api.CatAPI
@@ -33,7 +34,7 @@ object DiModule {
         MainViewModel(repository = dataRepository)
 
     @Provides
-    fun provideSharedPreference(@ApplicationContext appContext: Context) =
+    fun provideSharedPreference(@ApplicationContext appContext: Context): SharedPreferences =
         appContext.getSharedPreferences("default", 0)
 
     @Provides
