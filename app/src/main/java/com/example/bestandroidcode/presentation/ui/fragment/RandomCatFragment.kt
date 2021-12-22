@@ -60,9 +60,11 @@ class RandomCatFragment : Fragment() {
                 Log.d(javaClass.simpleName, "Fragment $value")
                 when (value) {
                     is MainViewModel.CurrentViewState.ShowLoading -> {
+                        mergedCatIV?.ivCat?.visibility = View.GONE
                         binding?.progressBar?.visibility = View.VISIBLE
                     }
                     is MainViewModel.CurrentViewState.HideLoading -> {
+                        mergedCatIV?.ivCat?.visibility = View.VISIBLE
                         binding?.progressBar?.visibility = View.GONE
                     }
                     is MainViewModel.CurrentViewState.ShowError -> {

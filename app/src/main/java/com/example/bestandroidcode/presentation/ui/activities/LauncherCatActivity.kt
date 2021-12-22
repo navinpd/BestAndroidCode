@@ -96,4 +96,12 @@ class LauncherCatActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if(!isFinishing) {
+            mOptionsMenu?.findItem(R.id.action_favorite)
+                ?.setIcon(R.drawable.baseline_favorite_border_black_24)
+        }
+    }
 }

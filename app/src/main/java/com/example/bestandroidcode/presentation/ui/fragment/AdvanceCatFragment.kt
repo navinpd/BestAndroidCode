@@ -75,9 +75,11 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
                         Log.d(javaClass.simpleName, "Fragment $value")
                         when (value) {
                             is MainViewModel.CurrentViewState.ShowLoading -> {
+                                mergedCatIV?.visibility = View.GONE
                                 viewBinding?.progressBar?.visibility = View.VISIBLE
                             }
                             is MainViewModel.CurrentViewState.HideLoading -> {
+                                mergedCatIV?.visibility = View.VISIBLE
                                 viewBinding?.progressBar?.visibility = View.GONE
                             }
                             is MainViewModel.CurrentViewState.ShowError -> {
