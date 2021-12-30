@@ -30,12 +30,12 @@ object DiModule {
         DataRepository(catApi = catAPI, dispatcher)
 
     @Provides
-    fun provideMainViewModel(dataRepository: DataRepository) =
-        MainViewModel(repository = dataRepository)
-
-    @Provides
     fun provideSharedPreference(@ApplicationContext appContext: Context): SharedPreferences =
         appContext.getSharedPreferences("default", 0)
+
+    @Provides
+    fun provideMainViewModel(dataRepository: DataRepository, preferences: SharedPreferences) =
+        MainViewModel(repository = dataRepository, preferences)
 
     @Provides
     fun provideGlide(@ApplicationContext appContext: Context) = Glide.with(appContext)

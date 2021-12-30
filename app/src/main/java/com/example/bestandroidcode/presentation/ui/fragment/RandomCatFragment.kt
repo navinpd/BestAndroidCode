@@ -8,11 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.example.bestandroidcode.R
-import com.example.bestandroidcode.data.remote.model.Cat
 import com.example.bestandroidcode.databinding.MainFragmentBinding
 import com.example.bestandroidcode.presentation.ui.activities.LauncherCatActivity
 import com.example.bestandroidcode.presentation.viewmodel.MainViewModel
@@ -24,14 +23,15 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RandomCatFragment : Fragment() {
 
-    private val viewModel by viewModels<MainViewModel> {
-        defaultViewModelProviderFactory
-    }
+//    private val viewModel by viewModels<MainViewModel> {
+//        defaultViewModelProviderFactory
+//    }
+
+    private val viewModel: MainViewModel by activityViewModels()
 
     @Inject
     lateinit var glide: RequestManager
 
-    var currentCatObject: Cat? = null
     private var binding: MainFragmentBinding? = null
     private var mergedCatIV: AppCompatImageView? = null
 
@@ -58,28 +58,30 @@ class RandomCatFragment : Fragment() {
         binding?.btnLoadCat?.setOnClickListener {
             viewModel.getRandomCat().observe(viewLifecycleOwner, { value ->
                 Log.d(javaClass.simpleName, "Fragment $value")
+
                 when (value) {
                     is MainViewModel.CurrentViewState.ShowLoading -> {
                         mergedCatIV?.ivCat?.visibility = View.GONE
                         binding?.progressBar?.visibility = View.VISIBLE
                     }
+
                     is MainViewModel.CurrentViewState.HideLoading -> {
                         mergedCatIV?.ivCat?.visibility = View.VISIBLE
                         binding?.progressBar?.visibility = View.GONE
                     }
+
                     is MainViewModel.CurrentViewState.ShowError -> {
                         Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
                     }
+
                     is MainViewModel.CurrentViewState.ShowData -> {
-                        val activity = activity as LauncherCatActivity
-                        currentCatObject = value.item
-                        activity.refreshFavoriteButton(currentCatObject!!.url)
+                        viewModel.unselectLikeButton()
+
                         glide.load(value.item?.url)
                             .into(mergedCatIV?.ivCat!!)
                         noCatSelected.visibility = View.GONE
                     }
                 }
-
             })
         }
 
