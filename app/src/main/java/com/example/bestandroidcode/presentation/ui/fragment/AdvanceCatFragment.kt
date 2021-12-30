@@ -44,6 +44,8 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
         generateQuestion()
         categoryList = resources.getStringArray(R.array.cat_category)
         val mergedCatIV = viewBinding?.container?.ivCat
+        viewModel.unselectLikeButton()
+        viewModel.clearUrl()
 
         val adapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryList)

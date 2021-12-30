@@ -47,6 +47,8 @@ class RandomCatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mergedCatIV = binding?.container?.ivCat
+        viewModel.unselectLikeButton()
+        viewModel.clearUrl()
 
 //        lifecycleScope.launchWhenStarted {
 //            val random = viewModel.getRandomCat()

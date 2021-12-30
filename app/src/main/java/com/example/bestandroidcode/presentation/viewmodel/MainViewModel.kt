@@ -59,6 +59,10 @@ class MainViewModel @Inject constructor(
         unselectMutableLiveData.postValue(Unit)
     }
 
+    fun clearUrl() {
+        catImageUrl = ""
+    }
+
     fun getRandomCat() = liveData {
         emit(ShowLoading)
         val catResponse = try {
