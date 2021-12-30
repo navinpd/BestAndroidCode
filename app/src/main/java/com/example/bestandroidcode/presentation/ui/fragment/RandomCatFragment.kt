@@ -61,13 +61,11 @@ class RandomCatFragment : Fragment() {
 
                 when (value) {
                     is MainViewModel.CurrentViewState.ShowLoading -> {
-                        mergedCatIV?.ivCat?.visibility = View.GONE
-                        binding?.progressBar?.visibility = View.VISIBLE
+                        showLoading(true)
                     }
 
                     is MainViewModel.CurrentViewState.HideLoading -> {
-                        mergedCatIV?.ivCat?.visibility = View.VISIBLE
-                        binding?.progressBar?.visibility = View.GONE
+                        showLoading(false)
                     }
 
                     is MainViewModel.CurrentViewState.ShowError -> {
@@ -91,6 +89,11 @@ class RandomCatFragment : Fragment() {
                     .navigate(R.id.randomCatFragment_to_advanceCatFragment)
             }
         }
+    }
+
+    private fun showLoading(isLoading : Boolean) {
+        mergedCatIV?.ivCat?.visibility =  if(isLoading) View.GONE else View.VISIBLE
+        binding?.progressBar?.visibility = if(isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {

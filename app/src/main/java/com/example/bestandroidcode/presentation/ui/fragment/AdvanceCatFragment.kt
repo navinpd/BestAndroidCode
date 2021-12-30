@@ -73,15 +73,11 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
                     .observe(viewLifecycleOwner, { value ->
                         Log.d(javaClass.simpleName, "Fragment $value")
                         when (value) {
-                            is MainViewModel.CurrentViewState.ShowLoading -> {
-                                mergedCatIV?.visibility = View.GONE
-                                viewBinding?.progressBar?.visibility = View.VISIBLE
-                            }
+                            is MainViewModel.CurrentViewState.ShowLoading ->
+                                showLoading(true)
 
-                            is MainViewModel.CurrentViewState.HideLoading -> {
-                                mergedCatIV?.visibility = View.VISIBLE
-                                viewBinding?.progressBar?.visibility = View.GONE
-                            }
+                            is MainViewModel.CurrentViewState.HideLoading ->
+                                showLoading(false)
 
                             is MainViewModel.CurrentViewState.ShowError -> {
                                 Toast.makeText(context, value.message, Toast.LENGTH_LONG).show()
@@ -110,6 +106,11 @@ class AdvanceCatFragment : Fragment(R.layout.advance_fragment) {
             }
 
         }
+    }
+
+    private fun showLoading(isLoading : Boolean) {
+        viewBinding?.container?.ivCat?.visibility =  if(isLoading) View.GONE else View.VISIBLE
+        viewBinding?.progressBar?.visibility = if(isLoading) View.VISIBLE else View.GONE
     }
 
     private fun generateQuestion() {
