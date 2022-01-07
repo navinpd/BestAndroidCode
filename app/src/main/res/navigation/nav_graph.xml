@@ -18,6 +18,11 @@
     <fragment
         android:id="@+id/advanceCatFragment"
         android:name="com.example.bestandroidcode.presentation.ui.fragment.AdvanceCatFragment"
-        android:label="AdvanceCatFragment" />
+        android:label="AdvanceCatFragment" >
+        <argument
+            android:name="requiredItem"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 
 </navigation>

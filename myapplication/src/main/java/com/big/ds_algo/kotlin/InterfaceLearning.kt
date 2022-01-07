@@ -1,6 +1,6 @@
 package com.big.ds_algo.kotlin
 
-class Learning : Learning1 {
+class InterfaceLearning : Learning1 {
     override var looking: String
         get() = "Hello"
         set(value){}
@@ -14,7 +14,7 @@ class Learning : Learning1 {
     }
 
     companion object {
-        private val learning = Learning()
+        private val learning = InterfaceLearning()
 
         @JvmStatic
         fun main(args: Array<String>) {
@@ -22,14 +22,14 @@ class Learning : Learning1 {
             println(learning.letsDoSomething())
         }
 
-        fun stuffDone(a : Learning) {
+        fun stuffDone(a : InterfaceLearning) {
             println(a.letsDoSomething())
         }
     }
 }
 
 fun main(args: Array<String>) {
-    val learning = Learning()
+    val learning = InterfaceLearning()
     println(learning.looking)
 }
 

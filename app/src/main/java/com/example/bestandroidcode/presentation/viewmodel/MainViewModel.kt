@@ -1,10 +1,7 @@
 package com.example.bestandroidcode.presentation.viewmodel
 
 import android.content.SharedPreferences
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.example.bestandroidcode.data.remote.model.Cat
 import com.example.bestandroidcode.data.remote.model.CatResponse
 import com.example.bestandroidcode.data.remote.repository.DataRepository
@@ -16,7 +13,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: DataRepository,
-    private val sharedPref: SharedPreferences
+    private val sharedPref: SharedPreferences,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     //Another way of getting data from repository

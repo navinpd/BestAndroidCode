@@ -41,6 +41,7 @@ class RandomCatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = MainFragmentBinding.inflate(inflater)
+
         return binding?.root
     }
 
