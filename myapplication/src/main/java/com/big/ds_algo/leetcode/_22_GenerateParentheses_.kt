@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class GenerateParentheses_22_Revisit {
+class _22_GenerateParentheses_ {
 
     companion object {
 

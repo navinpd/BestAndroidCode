@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class LongestPalindrome_5 {
+class _5_LongestPalindrome {
 
     companion object {
         @JvmStatic

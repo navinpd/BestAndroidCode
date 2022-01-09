@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class ProductArrayExceptSelf_238_ {
+class _238_ProductArrayExceptSelf_ {
 
     companion object {
         @JvmStatic

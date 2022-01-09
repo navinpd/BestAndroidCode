@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class RemoveDuplicates_26 {
+class _26_RemoveDuplicates {
 
     companion object {
         @JvmStatic

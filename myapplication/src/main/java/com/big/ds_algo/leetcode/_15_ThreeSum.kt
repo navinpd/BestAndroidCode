@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class ThreeSum_15 {
+class _15_ThreeSum {
 
     companion object {
         @JvmStatic

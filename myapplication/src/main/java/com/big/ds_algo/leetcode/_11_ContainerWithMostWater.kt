@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-internal class ContainerWithMostWater_11 {
+internal class _11_ContainerWithMostWater {
 
     companion object {
         @JvmStatic

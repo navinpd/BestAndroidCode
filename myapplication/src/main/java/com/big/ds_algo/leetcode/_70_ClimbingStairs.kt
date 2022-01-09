@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class ClimbingStairs_70 {
+class _70_ClimbingStairs {
 
     companion object {
         @JvmStatic

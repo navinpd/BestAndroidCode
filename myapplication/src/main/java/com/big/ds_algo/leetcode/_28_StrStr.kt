@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class StrStr_28 {
+class _28_StrStr {
 
     companion object {
         @JvmStatic

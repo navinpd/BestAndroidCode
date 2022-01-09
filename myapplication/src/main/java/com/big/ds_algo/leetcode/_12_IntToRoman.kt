@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class IntToRoman_12 {
+class _12_IntToRoman {
 
     companion object {
         @JvmStatic

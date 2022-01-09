@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class ContainsDuplicate_217 {
+class _217_ContainsDuplicate {
 
     companion object {
         @JvmStatic

@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class SpiralMatrix_54_ {
+class _54_SpiralMatrix_ {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {

@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class FirstAndLastPositionInSortedArray_34 {
+class _34_FirstAndLastPositionInSortedArray {
 
     companion object {
         @JvmStatic

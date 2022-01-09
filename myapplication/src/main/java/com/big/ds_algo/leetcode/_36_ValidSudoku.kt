@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class ValidSudoku_36 {
+class _36_ValidSudoku {
 
     companion object {
         // [[".",".","4",".",".",".","6","3","."],

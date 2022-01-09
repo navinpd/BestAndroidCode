@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class LongestNonRepeatingSubstring_3 {
+class _3_LongestNonRepeatingSubstring_ {
 
     companion object {
         @JvmStatic

@@ -3,7 +3,7 @@ package com.big.ds_algo.leetcode
 import java.util.*
 import kotlin.collections.HashMap
 
-class ValidParanthesis_20 {
+class _20_ValidParanthesis {
 
     companion object {
         @JvmStatic

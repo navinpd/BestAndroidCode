@@ -2,7 +2,7 @@ package com.big.ds_algo.leetcode
 
 import kotlin.math.abs
 
-class FindAllDuplicateInArray_442_ {
+class _442_FindAllDuplicateInArray_ {
 
     companion object {
         @JvmStatic

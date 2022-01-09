@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class SetMatrixZero_73 {
+class _73_SetMatrixZero {
 
     companion object {
         @JvmStatic

@@ -2,7 +2,7 @@ package com.big.ds_algo.leetcode
 
 import java.util.*
 
-class LetterCombination_17_Revisit {
+class _17_LetterCombination_ {
 
     companion object {
         @JvmStatic

@@ -2,7 +2,7 @@ package com.big.ds_algo.leetcode
 
 import java.util.*
 
-class ReverseInteger_7 {
+class _7_ReverseInteger {
 
     companion object {
         @JvmStatic

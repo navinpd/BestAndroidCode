@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class Zigzag_6 {
+class _6_Zigzag {
 
     companion object {
         @JvmStatic

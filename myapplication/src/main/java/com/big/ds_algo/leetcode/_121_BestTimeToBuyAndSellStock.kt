@@ -1,7 +1,7 @@
 package com.big.ds_algo.leetcode
 
 
-class BestTimeToBuyAndSellStock_121 {
+class _121_BestTimeToBuyAndSellStock {
     companion object {
 
         @JvmStatic

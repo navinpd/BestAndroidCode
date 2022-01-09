@@ -1,6 +1,6 @@
 package com.big.ds_algo.leetcode
 
-class RotateImage_48_ {
+class _48_RotateImage_ {
 
     companion object {
         @JvmStatic
